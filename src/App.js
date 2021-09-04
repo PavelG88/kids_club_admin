@@ -6,7 +6,7 @@ import LoginForm from './pages/LoginForm/LoginForm';
 
 class App extends React.Component {
    render() {
-      console.log(this.props.user.length);
+      // console.log(this.props.user.length);
       if(this.props.user.user_id && !this.props.isLoading){
          return (
             <div className="App">

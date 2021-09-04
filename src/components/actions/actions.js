@@ -7,7 +7,7 @@ export const logIn = (login, password) => {
     
     axios.get(`http://localhost:3001/?login=${login}&password=${password}`)
         .then(res => {
-            console.log(res.data[0]);
+            // console.log(res.data[0]);
             dispatch(logInSuccess(res.data[0]));
         })
         .catch(err => {
