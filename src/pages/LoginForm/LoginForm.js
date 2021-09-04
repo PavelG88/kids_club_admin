@@ -7,7 +7,7 @@ import './LoginForm.css';
 class LoginForm extends Component {
 
     state = {
-        isFilledIn: true
+        isCorrect: true
     }
     
     handeSubmit = (event) => {
@@ -16,15 +16,13 @@ class LoginForm extends Component {
         let login = data.get('login');
         let password = data.get('password');
 
-        if (!login & !password) {
-            this.setState({isFilledIn: false});
+        if (login && password) {
+            this.setState({isCorrect: true}, () => {
+                this.props.logIn(login, password);
+            });
         } else {
-            this.setState({isFilledIn: true});
-        }
-
-        console.log(login, password);
-
-        this.props.logIn(login, password);
+            this.setState({isCorrect: false});  
+        }     
 
     }
 
@@ -37,6 +35,9 @@ class LoginForm extends Component {
                             <input name="login" className="login-form__input" type="text" placeholder="username"/>
                             <input name="password" className="login-form__input" type="password" placeholder="password"/>
                             <button className="login-form__button">Авторизоваться</button>
+                            <div className={this.state.isCorrect && !this.props.error  ? "message unvisible" : "message visible"}> 
+                                Некорректный Логин или Пароль 
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -47,7 +48,7 @@ class LoginForm extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        isLoading: state.loading
+        error: state.error
     };
 };
 

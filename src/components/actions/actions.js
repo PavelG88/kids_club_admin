@@ -11,7 +11,6 @@ export const logIn = (login, password) => {
             dispatch(logInSuccess(res.data[0]));
         })
         .catch(err => {
-            console.log(err.message)
             dispatch(loadingFailure(err.message));
         });
     };

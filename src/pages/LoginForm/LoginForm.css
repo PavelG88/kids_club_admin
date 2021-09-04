@@ -55,3 +55,18 @@
   background: #43A047;
 }
 
+.message {
+   font-family: "Roboto", sans-serif;
+   color: red;
+   font-size: 14px;
+   position: absolute;
+   top: 25px;
+}
+
+.visible {
+   display: block;
+}
+
+.unvisible {
+   display: none;
+}

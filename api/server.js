@@ -7,6 +7,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
+hashCode = function(s){
+    return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);              
+  }
+
 const connection = mysql.createConnection ({
     host: config.host,
     port: config.port,
@@ -30,7 +34,10 @@ connection.connect((error) => {
 })
 
 app.get('/', (request, response) => {    
-    connection.query(`SELECT * FROM users_list WHERE login="${request.query.login}" and password="${request.query.password}";`, (error, data) => {       
+    let login = request.query.login;
+    let password = hashCode(request.query.password);
+    // console.log(password);
+    connection.query(`SELECT * FROM users_list WHERE login="${login}" and password="${password}";`, (error, data) => {       
         if (error || data.length === 0) {
             response.status(400).json(error);
             return;
