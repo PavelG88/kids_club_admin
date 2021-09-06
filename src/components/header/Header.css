@@ -1,0 +1,28 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+.user-field, .menu-field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.user-field__title {
+    font-family: "Roboto", sans-serif;
+    width: 70%;
+    text-align: center;
+    font-size: 30px;
+    color: coral;
+    margin: 0;
+}
+
+.user-field__button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    border-radius: 5px;
+    padding: 10px;
+    color: #FFFFFF;
+    background: coral;
+    font-size: 14px;
+    cursor: pointer;
+}

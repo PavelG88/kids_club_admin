@@ -1,0 +1,36 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:600);
+
+.menu-field__item {
+   text-decoration: none;
+   background: rgba(17, 0, 255, 0.877);
+   color: white;
+   border-radius:80%;
+   width: 220px;
+   min-height: 50px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin: 10px;
+   font-weight: 600;
+   font-family: "Roboto", sans-serif;
+   font-size: 20px;
+   cursor: pointer;
+   padding: 5px;
+   box-sizing: border-box;
+}
+
+.menu-field__item:hover {
+   opacity: 0.5;
+}
+
+.menu-field__item:nth-child(2n) {
+   background: rgba(255, 51, 0, 0.877);
+}
+
+.menu-field__item:nth-child(3n) {
+   background: rgba(27, 207, 21, 0.877);
+}
+
+.menu-field__item:nth-child(4n) {
+   background: rgba(216, 196, 14, 0.877);
+}

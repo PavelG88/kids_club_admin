@@ -1,19 +1,25 @@
-import { startedConnecting, failureConnecting, successLogIn } from './types';
+import { startedConnecting, failureConnecting, successLogIn, successLogOut } from './types';
 import axios from "axios";
 
 export const logIn = (login, password) => {
     return dispatch => {
         dispatch(startLoading());
     
-    axios.get(`http://localhost:3001/?login=${login}&password=${password}`)
-        .then(res => {
-            // console.log(res.data[0]);
-            dispatch(logInSuccess(res.data[0]));
-        })
-        .catch(err => {
-            dispatch(loadingFailure(err.message));
-        });
-    };
+        axios.get(`http://localhost:3001/?login=${login}&password=${password}`)
+            .then(res => {
+                // console.log(res.data[0]);
+                dispatch(logInSuccess(res.data[0]));
+            })
+            .catch(err => {
+                dispatch(loadingFailure(err.message));
+            });
+        };
+};
+
+export const logOut = () => {
+    return dispatch => {
+        dispatch(logOutSuccess());
+        };
 };
 
 const startLoading = () => ({
@@ -32,4 +38,8 @@ const logInSuccess = data => ({
     payload: {
         data
     }
+});
+
+export const logOutSuccess = () => ({
+    type: successLogOut
 });

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import './App.css';
 import LoginForm from './pages/LoginForm/LoginForm';
+import MainPage from './pages/MainPage/MainPage';
 
 class App extends React.Component {
    render() {
@@ -10,7 +11,7 @@ class App extends React.Component {
       if(this.props.user.user_id && !this.props.isLoading){
          return (
             <div className="App">
-               <h1>РАБОТАЕТ!!!</h1>
+               <MainPage />
             </div>
          );
       } else {
