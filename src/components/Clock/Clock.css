@@ -1,0 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400);
+
+.timedate {
+    font-family: "Roboto", sans-serif;
+    font-size: 50px;
+    font-weight: 400;
+    text-align: center;
+    width: 50%;
+    margin: 40px auto;
+    color: blue;
+    padding: 20px;
+}

@@ -13,7 +13,7 @@ class MenuItem extends Component {
     render() { 
         return (
             <>
-                <Link className="menu-field__item" to="{this.props.link}">
+                <Link className="menu-field__item" to={this.props.link}>
                     {this.props.name}
                 </Link>
             </>

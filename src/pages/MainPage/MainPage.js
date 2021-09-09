@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
 // import {  } from '../../components/actions/actions';
 
 import './MainPage.css';
 import Header from '../../components/header/Header';
+import Main from '../../components/Main/Main';
 
 class MainPage extends Component {
 
@@ -15,7 +17,7 @@ class MainPage extends Component {
         return (
             <div className="wrapper">
                 <Header />
-                <h1>ПОЛЕ С ИЗМЕНЯЕМЫМ КОНТЕНТОМ</h1>
+                <Route path="/" exact component={Main}/>
             </div>
         );
     }
