@@ -45,12 +45,8 @@ class Clock extends Component {
         return (
             <>
                 <div className="timedate">
-                    <span className="day">{this.state.day}  </span>
-                    <span className="mon">{this.state.month}  </span>
-                    <span className="year">{this.state.year}</span><br />
-                    <span className="hour">{this.state.hour}</span>:
-                    <span className="minut">{this.state.min}</span>:
-                    <span className="second">{this.state.sec}</span>
+                    <span className="date">{this.state.day} {this.state.month} {this.state.year}</span><br/>
+                    <span className="time">{this.state.hour}:{this.state.min}:{this.state.sec}</span>
                 </div>
             </>
         );

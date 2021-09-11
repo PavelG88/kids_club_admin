@@ -4,20 +4,21 @@ import axios from "axios";
 
 import './ListClasses.css';
 import ClassItem from '../../components/ClassItem/ClassItem';
+import MoreDetails from '../MoreDetails/MoreDetails';
 
 class ListClasses extends Component {
 
     state = {
        isLoading: true,
        classes: null,
+       moreDetails: false,
+       moreInfo: null,
        error: ''
     }
 
-    getInfoFromBD = () => {
-        // this.setState({ isLoading: true });
+    getListOfClassesFromBD = () => {
         axios.get(`http://localhost:3001/ListClasses/`)
         .then(res => {
-            // console.log(res.data);
             this.setState({ isLoading: false, classes: res.data });
         })
         .catch(err => {
@@ -26,9 +27,31 @@ class ListClasses extends Component {
         });
     }
 
+    getMoreInfoFromBD = (id) => {
+        this.setState({ isLoading: true, moreDetails: true });
+        axios.get(`http://localhost:3001/ListClasses/${id}`)
+        .then(res => {
+            // console.log(res.data);
+            this.setState({ isLoading: false, moreInfo: res.data });
+        })
+        .catch(err => {
+            console.log(err);
+            this.setState({ isLoading: false });
+        });
+    }
+
+    showMoreInfo = (id) => {
+        this.setState({ moreDetails: true, isLoading: true });
+        this.getMoreInfoFromBD(id);
+    }
+
+    closeMoreInfo = () => {
+        this.setState({ moreDetails: false, moreInfo: null });
+    }
+
     render() { 
         if (!this.state.classes) {
-            this.getInfoFromBD();
+            this.getListOfClassesFromBD();
         }
 
         if (this.state.isLoading) {
@@ -42,10 +65,17 @@ class ListClasses extends Component {
         return (
             <div className="listClass-field">
                 {this.state.classes.map((classItem) => {
-                    return <ClassItem key={classItem.id} {...classItem}/>
+                    return <ClassItem 
+                        key={classItem.class_id} 
+                        {...classItem} 
+                        action = {this.showMoreInfo}
+                    />
                 })}
+                <div className={this.state.moreDetails ? "visible" : "unvisible"}>
+                    <MoreDetails {...this.state.moreInfo} isShow={this.state.moreDetails} action={this.closeMoreInfo} />
+                </div>
             </div>
-        );
+        );      
     }
 }
 

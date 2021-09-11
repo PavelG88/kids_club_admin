@@ -1,31 +1,48 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400);
 
-.classItem-field {
+.groupItem-field {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin: 10px;
     border: 2px solid rgb(6, 105, 253);
     border-radius: 10px;
     padding: 5px;
     box-sizing: border-box;
-    background-color: rgb(197, 247, 230);
-    width: 400px;
+    background-color: honeydew;
+    width: 200px;
 }
 
-.classItem-title {
+.groupItem-title {
     text-align: center;
     font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    margin: 5px;
+    padding: 0;
 }
 
-.classItem-info {
+.groupItem-info {
+    text-align: center;
     font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
 }
 
-.classItem-button {
+.margin-top-5 {
+    margin-top: 5px;
+}
+
+.groupItem-button {
+    text-decoration: none;
+    margin-top: 10px;
     text-align: center;
     font-family: "Roboto", sans-serif;
     color: rgb(6, 105, 253);
     cursor: pointer;
+}
 
+.list {
+    list-style-type: none;
+    text-align: left;
 }

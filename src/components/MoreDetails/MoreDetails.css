@@ -1,0 +1,30 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400);
+
+.moreDetails-field {
+    margin: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: rgb(197, 247, 230);
+    border-radius: 5px;
+}
+
+.moreDetails-button {
+    text-decoration: none;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    color: rgb(6, 105, 253);
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.moreDetails-title, .moreDetails-info {
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+}
+
+.moreDetails-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
