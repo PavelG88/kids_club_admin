@@ -47,6 +47,17 @@ app.get('/', (request, response) => {
     })     
 })
 
+app.get('/ListClasses', (request, response) => {    
+    connection.query(`SELECT * FROM classes`, (error, data) => {       
+        if (error || data.length === 0) {
+            response.status(400).json(error);
+            return;
+        }
+        
+        response.status(200).json(data);
+    })     
+})
+
 
 app.listen(3001, () => {
     console.log('сервер запущен')

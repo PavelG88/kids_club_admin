@@ -9,16 +9,16 @@ class ListClasses extends Component {
 
     state = {
        isLoading: true,
-       classes: [],
+       classes: null,
        error: ''
     }
 
     getInfoFromBD = () => {
-        this.setState({ isLoading: true });
+        // this.setState({ isLoading: true });
         axios.get(`http://localhost:3001/ListClasses/`)
         .then(res => {
-            console.log(res.data);
-            this.setState({ isLoading: false });
+            // console.log(res.data);
+            this.setState({ isLoading: false, classes: res.data });
         })
         .catch(err => {
             console.log(err);
@@ -27,12 +27,24 @@ class ListClasses extends Component {
     }
 
     render() { 
+        if (!this.state.classes) {
+            this.getInfoFromBD();
+        }
+
+        if (this.state.isLoading) {
+            return (
+                <div className="preloader">
+                    Загрузка из БД
+                </div>
+            );
+        }
+
         return (
-            <>
             <div className="listClass-field">
-                <ClassItem />
+                {this.state.classes.map((classItem) => {
+                    return <ClassItem key={classItem.id} {...classItem}/>
+                })}
             </div>
-            </>
         );
     }
 }

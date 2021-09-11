@@ -9,7 +9,7 @@ class ClassItem extends Component {
         return (
             <div className="classItem-field">
                 <h2 className="classItem-title">{this.props.name}</h2>
-                <p className="classItem-info">{this.props.description}</p>
+                <p className="classItem-info">{this.props.descriptions}</p>
                 <p className="classItem-info">Возраст: {this.props.min_age} - {this.props.max_age}</p>
                 <div className="classItem-button">Подробнее</div>
             </div>
