@@ -15,9 +15,9 @@ class Clock extends Component {
 
    updateClock = () => {
         let now = new Date();
-        let sec = now.getSeconds(),
-            min = now.getMinutes(),
-            hour = now.getHours(),
+        let sec = now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds(),
+            min = now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes(),
+            hour = now.getHours() < 10 ? '0' + now.getHours() : now.getHours(),
             month = now.getMonth(),
             day = now.getDate(),
             year = now.getFullYear();

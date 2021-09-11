@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom';
 import './MainPage.css';
 import Header from '../../components/header/Header';
 import Main from '../../components/Main/Main';
+import ListClasses from '../../components/ListClasses/ListClasses';
 
 class MainPage extends Component {
 
@@ -17,7 +18,10 @@ class MainPage extends Component {
         return (
             <div className="wrapper">
                 <Header />
-                <Route path="/" exact component={Main}/>
+                <div className="info-ifeld">
+                    <Route path="/" exact component={Main}/>
+                    <Route path="/listClasses" exact component={ListClasses}/>
+                </div>
             </div>
         );
     }

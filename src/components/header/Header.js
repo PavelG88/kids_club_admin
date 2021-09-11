@@ -20,7 +20,7 @@ class Header extends Component {
                 </div>
                 <div className="menu-field">
                     <MenuItem name="Главная" link="/"/>
-                    <MenuItem name="Список кружков" link="/"/>
+                    <MenuItem name="Список кружков" link="/listClasses"/>
                     <MenuItem name="Запись на кружок" link="/"/>
                     <MenuItem name="Добавление кружка" link="/"/>
                 </div>

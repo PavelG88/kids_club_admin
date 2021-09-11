@@ -1,0 +1,7 @@
+.classItem-field {
+    margin: 10px;
+    border: 5px solid grey;
+    border-radius: 10px;
+    padding: 5px;
+    box-sizing: border-box;
+}

@@ -1,8 +1,16 @@
 .wrapper {
-    /* background-image: url("./2.jpg");
+    background-image: url("./2.jpg");
     background-position: center;
     background-size: cover;
-    height: 100vh; */
+    height: 100vh;
     padding: 10px;
+    box-sizing: border-box;
 }
 
+.info-ifeld {
+    /* background-image: url(./2.jpg);
+    height: 84vh;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.7; */
+}
