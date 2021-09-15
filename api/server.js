@@ -126,6 +126,34 @@ app.get('/ListClasses/:id', (request, response) => {
     })    
 })
 
+app.get('/ListGroups/:id', (request, response) => {    
+    connection.query(
+        `SELECT *
+        FROM groups_class
+        WHERE classes_id = ${request.params.id}`, 
+        (error, data) => {       
+        if (error || data.length === 0) {
+            response.status(400).json(error);
+            return;
+        }
+        
+        response.status(200).json(data);
+    })    
+})
+
+
+app.get('/ListChildrens', (request, response) => {    
+    connection.query(`SELECT * FROM children_list ORDER BY kid_surname`, 
+        (error, data) => {       
+        if (error || data.length === 0) {
+            response.status(400).json(error);
+            return;
+        }
+        
+        response.status(200).json(data);
+    })    
+})
+
 
 app.listen(3001, () => {
     console.log('сервер запущен')

@@ -27,7 +27,7 @@ class Clock extends Component {
             sec: sec,
             min: min,
             hour: hour,
-            month: months[month-1],
+            month: months[month],
             day: day,
             year: year
         });

@@ -7,6 +7,7 @@ import './MainPage.css';
 import Header from '../../components/header/Header';
 import Main from '../../components/Main/Main';
 import ListClasses from '../../components/ListClasses/ListClasses';
+import Recording from '../../components/Recording/Recording';
 
 class MainPage extends Component {
 
@@ -21,7 +22,7 @@ class MainPage extends Component {
                 <div className="info-ifeld">
                     <Route path="/" exact component={Main}/>
                     <Route path="/listClasses" exact component={ListClasses}/>
-                    <Route path="/recording" exact component={Main}/>
+                    <Route path="/recording" exact component={Recording}/>
                 </div>
             </div>
         );

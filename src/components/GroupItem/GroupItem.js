@@ -10,7 +10,12 @@ class GroupItem extends Component {
             <div className="groupItem-field">
                 <h3 className="groupItem-title">{this.props.name_group}</h3>
                 <p className="groupItem-info">Руководитель: {this.props.teacher}</p>
+                {this.props.min_age_group === this.props.max_age_group
+                ?
+                    <p className="moreDetails-info">Возраст: {this.props.min_age_group}</p>
+                :
                 <p className="groupItem-info">Возраст: {this.props.min_age_group} - {this.props.max_age_group}</p>
+                }
                 <p className="groupItem-info">Всего мест: {this.props.max_number}</p>
                 <p className="groupItem-info margin-top-5">Свободно: {this.props.max_number - this.props.current_number}</p>
                 <h4 className="groupItem-title">Расписание</h4>
