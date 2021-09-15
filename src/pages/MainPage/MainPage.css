@@ -1,5 +1,5 @@
 .wrapper {
-    background-image: url("./2.jpg");
+    background-image: url("./back.jpg");
     background-position: center;
     background-size: cover;
     height: 100vh;
@@ -7,10 +7,10 @@
     box-sizing: border-box;
 }
 
-.info-ifeld {
-    /* background-image: url(./2.jpg);
+/* .info-ifeld {
+    background-image: url(./2.jpg);
     height: 84vh;
     background-position: center;
     background-size: cover;
-    opacity: 0.7; */
-}
+    opacity: 0.7;
+} */
