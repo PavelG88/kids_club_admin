@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './InputArea.css';
 
+let dateFormat = require("dateformat");
+const today = dateFormat(new Date(), 'yyyy-mm-dd');
+
 class InputArea extends Component {
 
     state = {
@@ -8,7 +11,54 @@ class InputArea extends Component {
     } 
 
     checkValue = (event) => {
-        this.props.action(this.props.name, event.target.value);
+        let isError = true;
+        
+        if (event.target.name === 'birthday') {
+            //Проверка даты рождения
+            let err = 'некорректная дата рождения';
+            if (event.target.value >= today) {
+                this.setState({ messageError: `* ${err}` });
+            } else {
+                this.setState({ messageError: '' });
+                isError = false;
+            }
+
+        } else if (event.target.name === 'parent_phone') {
+            //Проверка номера телефона
+            let err = 'формат ввода: 8ХХХХХХХХХХ';
+            let reg = new RegExp('^8[0-9]{10}$');
+            if (!reg.test(event.target.value) && event.target.value) {
+                this.setState({ messageError: `* ${err}` });
+            } else {
+                this.setState({ messageError: '' });
+                isError = false;
+            }
+
+
+        } else {
+            //Проверка текстовых полей
+            let reg = new RegExp('^[а-яА-Я- ]+$');
+            let err_1 = 'только русские буквы';
+            let err_2 = '3 и более символа';
+            
+            if (!reg.test(event.target.value) && event.target.value.length < 3 && event.target.value) {
+                this.setState({ messageError: `* ${err_1}, ${err_2}` });
+            } else if (!reg.test(event.target.value) && event.target.value.length >= 3) {
+                this.setState({ messageError: `* ${err_1}` });
+            } else if (reg.test(event.target.value) && event.target.value.length < 3 && event.target.value) {
+                this.setState({ messageError: `* ${err_2}` });
+            }else {
+                this.setState({ messageError: '' });
+                isError = false;
+            }
+        }
+
+        if (isError) {
+            this.props.action(this.props.name, null);
+        } else {
+            this.props.action(this.props.name, event.target.value);
+        }
+        
     }
 
     render() { 

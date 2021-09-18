@@ -8,6 +8,7 @@ import Header from '../../components/header/Header';
 import Main from '../../components/Main/Main';
 import ListClasses from '../../components/ListClasses/ListClasses';
 import Recording from '../../components/Recording/Recording';
+import Shedule from '../../components/Shedule/Shedule';
 
 class MainPage extends Component {
 
@@ -23,6 +24,7 @@ class MainPage extends Component {
                     <Route path="/" exact component={Main}/>
                     <Route path="/listClasses" exact component={ListClasses}/>
                     <Route path="/recording" exact component={Recording}/>
+                    <Route path="/shedule" exact component={Shedule}/>
                 </div>
             </div>
         );

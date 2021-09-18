@@ -18,7 +18,7 @@ class MoreDetails extends Component {
                 <p className="moreDetails-info">Возраст: {this.props.min_age} - {this.props.max_age}</p>
                 <div className="moreDetails-group">
                     {this.props.groups ? this.props.groups.map((group_item) => {
-                        return <GroupItem {...group_item} key={group_item.group_id}/>
+                        return <GroupItem classes_id={this.props.classes_id} {...group_item} key={group_item.group_id}/>
                     })
                     :
                     'Список групп отсутствует'

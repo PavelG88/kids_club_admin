@@ -20,9 +20,9 @@ class GroupItem extends Component {
                 <p className="groupItem-info margin-top-5">Свободно: {this.props.max_number - this.props.current_number}</p>
                 <h4 className="groupItem-title">Расписание</h4>
                 <ul className="groupItem-info margin-0">
-                    {this.props.shedule.map((sedule_item) => {
+                    {this.props.shedule.map((shedule_item) => {
                         return (
-                            <li className="groupItem-info list margin-0">{sedule_item.day}: {sedule_item.time_start} - {sedule_item.time_end}</li>
+                            <li className="groupItem-info list margin-0">{shedule_item.day}: {shedule_item.time_start} - {shedule_item.time_end}</li>
                         );
                     }
                     )}
@@ -30,7 +30,13 @@ class GroupItem extends Component {
 
                 <Link 
                     className="groupItem-button"
-                    to="/recording"
+                    to={{
+                        pathname: "/recording", 
+                        state: {
+                            group_id: this.props.group_id,
+                            classes_id: this.props.classes_id
+                        }
+                    }}
                 >
                     Записать в группу
                 </Link>

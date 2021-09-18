@@ -1,0 +1,43 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400);
+
+.shedule-field {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: stretch;
+    flex-wrap: wrap;
+
+}
+
+.shedule-item {
+    border-radius: 5px;
+    border: 1px solid blue;
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+    box-sizing: border-box;
+}
+
+.shedule-item__title {
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    margin: 5px;
+    padding: 0;
+}
+
+.shedule-item__visible, .preloader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.411);
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+}
+
+.unvisible {
+    display: none;
+}

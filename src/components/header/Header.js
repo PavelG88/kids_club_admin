@@ -22,7 +22,7 @@ class Header extends Component {
                     <MenuItem name="Главная" link="/"/>
                     <MenuItem name="Список кружков" link="/listClasses"/>
                     <MenuItem name="Запись на кружок" link="/recording"/>
-                    <MenuItem name="Добавление кружка" link="/"/>
+                    <MenuItem name="Расписание" link="/shedule"/>
                 </div>
             </>
         );

@@ -1,0 +1,66 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400);
+
+.list-group-field {
+    align-items: center;
+    margin: 10px;
+    border: 2px solid rgb(6, 105, 253);
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: honeydew;
+}
+
+.list-group-title {
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    font-size: 20px;
+    margin: 5px;
+    padding: 0;
+}
+
+.list-group-info {
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+.margin-top-5 {
+    margin-top: 5px;
+}
+
+.list-group-button {
+    text-decoration: none;
+    margin-top: 10px;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    color: rgb(6, 105, 253);
+    cursor: pointer;
+}
+
+.list-group__list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-group__kid {
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.list-group__button-delete {
+    text-align: center;
+    padding: 2px;
+    box-sizing: border-box;
+    border-radius: 100%;
+    border: 2px solid grey;
+    cursor: pointer;
+}
+
+.list {
+    list-style-type: none;
+    text-align: left;
+}

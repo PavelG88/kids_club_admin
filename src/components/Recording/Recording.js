@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from "axios";
+import {Redirect} from 'react-router-dom';
 
 import './Recording.css';
 import InputArea from '../InputArea/InputArea';
+
+let dateFormat = require("dateformat");
 
 class Recording extends Component {
 
@@ -12,7 +15,8 @@ class Recording extends Component {
       classes: null,
       isClassesSelected: false,
       groups_class: null,
-      error: '',
+      // fieldsWithError: ['classes', 'kid_name', 'kid_surname', 'birthday', 'parent_name', 'parent_surname', 'parent_phone'],
+      fieldsWithError: [],
       isChildInBD: false,
       childrenList: null,
       userInput: {
@@ -28,8 +32,10 @@ class Recording extends Component {
                parent_surname: '',
                parent_second_name: '',
                parent_phone: ''
-         }
-      }
+         }, 
+         user_id: this.props.user_id
+      },
+      isSave: false
    }
 
    getListOfClassesFromBD = () => {
@@ -72,17 +78,29 @@ class Recording extends Component {
       if (event.target.name === 'classes'){
          let updateUserInput = this.state.userInput;
          updateUserInput.classes_id =event.target.value
-         this.setState({ userInput: updateUserInput, isClassesSelected: true });
-         this.getGroupsNameFromBD(event.target.value);
-      }
 
-      if (event.target.name === 'groups_class'){
+         //Удаляем поле из ошибок
+         const newFielsWithError = this.state.fieldsWithError.filter((item) => {
+            return item !== event.target.name;
+        });
+
+         this.setState({ userInput: updateUserInput, isClassesSelected: true, fieldsWithError: [...newFielsWithError] });
+         this.getGroupsNameFromBD(event.target.value);
+      } else if (event.target.name === 'groups_class'){
          let updateUserInput = this.state.userInput;
          updateUserInput.groups_class_id = event.target.value;
-         this.setState({ userInput: updateUserInput });
-      }
 
-      if (event.target.name === 'child-in-BD'){
+         // //Проверяем, что есть свободные места в группе
+         // let freePlaces = this.state.groups_class[index].max_number - this.state.groups_class[index].current_number
+         // if (freePlaces > 0) {
+         //    const newFielsWithError = this.state.fieldsWithError.filter((item) => {
+         //       return item !== event.target.name;
+         //    });
+         //    this.setState({ userInput: updateUserInput, fieldsWithError: [...newFielsWithError] });
+         // }
+
+         this.setState({ userInput: updateUserInput });
+      } else if (event.target.name === 'child-in-BD'){
          
          if(!this.state.isChildInBD) {
             this.setState({ isChildInBD: !this.state.isChildInBD });
@@ -102,9 +120,7 @@ class Recording extends Component {
             }
             this.setState({ isChildInBD: !this.state.isChildInBD, childrenList: null, userInput: updateUserInput });
          }
-      }
-
-      if (event.target.name === 'select-child'){
+      } else if (event.target.name === 'select-child'){
          let selectedKid;
          for (let i = 0; i < this.state.childrenList.length; i++ ) {
                if (this.state.childrenList[i].kid_id === +event.target.value) {
@@ -120,12 +136,60 @@ class Recording extends Component {
    }
 
    changeState = (name, value) => {
+      
+      // //Проверка возраста ребенка и возраста группы
+      // if (name === 'birthday' && !this.state.userInput.groups_class_id) {
+      //    value = this.checkAge(value)
+      // }
+
       let updateUserInput = this.state.userInput;
       updateUserInput.children[name] = value;
-      this.setState({ userInput: updateUserInput });
+
+      if (!value) {
+         //Проверяем есть ли поле уже в полях с ошибкой
+         let isFieldInFieldsWithError = this.state.fieldsWithError.find((item) => {
+             return item === name;
+         });
+
+         if (!isFieldInFieldsWithError) {
+             const newFielsWithError = [...this.state.fieldsWithError, name];
+             this.setState({ userInput: updateUserInput, fieldsWithError: newFielsWithError });
+         } else {
+             this.setState({ userInput: updateUserInput });
+         }
+
+     } else {
+         //Удаляем поле из ошибок
+         const newFielsWithError = this.state.fieldsWithError.filter((item) => {
+             return item !== name;
+         });
+
+         //Вносим изменения в локальный State
+         this.setState({ userInput: updateUserInput, fieldsWithError: [...newFielsWithError] });
+     }      
    }
 
+   recordInBD = (event) => {
+      event.preventDefault(); 
+      this.setState({ isLoading: true });
+      axios.post(`http://localhost:3001/Recording`, this.state.userInput)
+         .then(res => {
+            // console.log(res.data);
+            this.setState({ isLoading: false, isSave: true });
+         })
+         .catch(err => {
+            console.log(err);
+            this.setState({ isLoading: false });
+         });
+   }
+
+   // updateState = (listId) => {
+   //    getGroupsNameFromBD(listId.classes_id);
+
+   // }
+
    render() { 
+      
       if (!this.state.classes) {
          this.getListOfClassesFromBD();
       }
@@ -138,9 +202,20 @@ class Recording extends Component {
          );
       }
 
+      // if (this.props.location.state && !this.state.groups_class) {
+      //    this.updateState(this.props.location.state);
+      // }
+
+      if (this.state.isSaved && !this.state.loading) {
+            return <Redirect to='/shedule'/>
+      }
+
+      
+      // console.log(this.state.fieldsWithError);
+
       return (
          <>
-               <form className="recording-field">
+               <form className="recording-field" onSubmit={this.recordInBD}>
                   <div className="input-field">
                      <label>
                            Кружок:
@@ -167,12 +242,13 @@ class Recording extends Component {
                            :
                               <select onChange={this.userSelect} name="groups_class" value={this.state.userInput.groups_class_id} className="recording-field__select">
                                  <option value="" hidden>Выберите группу</option>
-                                 {this.state.groupsClass.map((groupItem) => {
+                                 {this.state.groupsClass.map((groupItem, index) => {
                                        return <option 
                                           value={groupItem.group_id} 
                                           key={groupItem.group_id}
+                                          index={index}
                                           >
-                                             {groupItem.name_group}
+                                             {groupItem.name_group} (Возразст: {groupItem.min_age_group === groupItem.max_age_group ? `${groupItem.min_age_group} ` : `${groupItem.min_age_group} - ${groupItem.max_age_group}`} Свободно мест: {groupItem.max_number - groupItem.current_number})
                                           </option>
                                  })}
                               </select>
@@ -193,7 +269,7 @@ class Recording extends Component {
                                        value={child.kid_id} 
                                        key={child.kid_id}
                                        >
-                                          {child.kid_surname + ' ' + child.kid_name + ' (' + child.birthday + ')'}
+                                          {child.kid_surname + ' ' + child.kid_name + ' (' + dateFormat(child.birthday, "dd.mm.yyyy") + ')'}
                                        </option>
                               })}
                            </select>
@@ -274,7 +350,7 @@ class Recording extends Component {
                            disabled={this.state.userInput.children.kid_id}
                      />
 
-                     <button>Записать</button>
+                     <button disabled={this.state.fieldsWithError.length}>Записать</button>
 
                   </div>
                </form>
