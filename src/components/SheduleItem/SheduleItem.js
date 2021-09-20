@@ -27,7 +27,7 @@ class SheduleItem extends Component {
                 :
                     <p className="sheduleItem-info">Возраст: {this.props.min_age_group} - {this.props.max_age_group}</p>
                 }
-                <p className="sheduleItem-info margin-top-5">Свободно: {this.props.max_number - this.props.current_number}</p>
+                <p className="sheduleItem-info margin-top-5">Всего мест: {this.props.max_number}</p>
 
                 <button className="sheduleItem-button" onClick={() => {this.props.action(groupInfo)}}> Список </button >
             </div>

@@ -36,7 +36,7 @@ connection.connect((error) => {
 
 convertResponseToUserFormat = (data) => {
     let convetedData = {
-        classes_id: data[0].classes_id,
+        classes_id: data[0].class_id,
         name_class: data[0].name_class,
         description: data[0].descriptions,
         min_age: data[0].min_age,
@@ -83,6 +83,7 @@ convertResponseToUserFormat = (data) => {
         }
     });
 
+    // console.log(convetedData);
     return convetedData;
 }
 
@@ -122,7 +123,7 @@ app.get('/', (request, response) => {
     })     
 })
 
-app.get('/ListClasses', (request, response) => {    
+app.get('/listClasses', (request, response) => {    
     connection.query(`SELECT * FROM classes`, (error, data) => {       
         if (error || data.length === 0) {
             response.status(400).json(error);
@@ -131,6 +132,33 @@ app.get('/ListClasses', (request, response) => {
         
         response.status(200).json(data);
     })     
+})
+
+app.get('/listClassesAndGroups/:classes_id', (request, response) => {    
+
+    let dataForResponse;
+    connection.query(`SELECT * FROM classes`, (error, data) => {       
+        if (error || data.length === 0) {
+            response.status(400).json(error);
+            return;
+        }
+        dataForResponse = [data];
+    });
+    
+    connection.query(
+        `SELECT *
+        FROM groups_class
+        WHERE classes_id = ${request.params.classes_id}`, 
+        (error, data) => {       
+        if (error || data.length === 0) {
+            response.status(400).json(error);
+            return;
+        }
+        dataForResponse.push(data)
+        response.status(200).json(dataForResponse);
+    });
+
+    
 })
 
 app.get('/ListClasses/:id', (request, response) => {    

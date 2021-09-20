@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from "axios";
-import {Redirect} from 'react-router-dom';
 
 import './Recording.css';
 import InputArea from '../InputArea/InputArea';
@@ -14,14 +13,14 @@ class Recording extends Component {
       isLoading: true,
       classes: null,
       isClassesSelected: false,
-      groups_class: null,
+      groupsClass: null,
       // fieldsWithError: ['classes', 'kid_name', 'kid_surname', 'birthday', 'parent_name', 'parent_surname', 'parent_phone'],
       fieldsWithError: [],
       isChildInBD: false,
       childrenList: null,
       userInput: {
          classes_id: '',
-         groups_class_id: '',
+         group: {},
          children: {
                kid_id: null,
                kid_name: '',
@@ -39,7 +38,7 @@ class Recording extends Component {
    }
 
    getListOfClassesFromBD = () => {
-      axios.get(`http://localhost:3001/ListClasses/`)
+      axios.get(`http://localhost:3001/listClasses/`)
       .then(res => {
          this.setState({ isLoading: false, classes: res.data });
       })
@@ -50,61 +49,111 @@ class Recording extends Component {
    }
 
    getGroupsNameFromBD = (id) => {
-      this.setState({ isLoading: true });
-      axios.get(`http://localhost:3001/ListGroups/${id}`)
-      .then(res => {
-         // console.log(res.data);
-         this.setState({ isLoading: false, groupsClass: res.data });
-      })
-      .catch(err => {
-         console.log(err);
-         this.setState({ isLoading: false });
+      this.setState({ isLoading: true }, () => {
+         axios.get(`http://localhost:3001/ListGroups/${id}`)
+         .then(res => {
+            this.setState({ isLoading: false, groupsClass: res.data });
+         })
+         .catch(err => {
+            console.log(err);
+            this.setState({ isLoading: false });
+         });
       });
+      
    }
 
-   getChildrenListFromBD = () => {
-      this.setState({ isLoading: true });
-      axios.get(`http://localhost:3001/ListChildrens`)
+   getListClassesAndGroupsFromBD(listId) {
+      const {classes_id, group_id} = listId;
+      axios.get(`http://localhost:3001/listClassesAndGroups/${classes_id}`)
       .then(res => {
-         this.setState({ isLoading: false, childrenList: res.data });
+         let updateUserInput = this.state.userInput;
+         updateUserInput.classes_id = classes_id;
+
+         let freePlaces, min_age, max_age;
+         res.data[1].forEach((group) => {
+            if (group.group_id === group_id) {
+               freePlaces = group.max_number - group.current_number;
+               min_age = group.min_age_group;
+               max_age = group.max_age_group;
+               // console.log(freePlaces);
+            }
+         });
+         
+         updateUserInput.group.groups_class_id = group_id;
+         updateUserInput.group.min_age = min_age;
+         updateUserInput.group.max_age = max_age;
+         updateUserInput.group.freePlaces = freePlaces;
+         this.setState({ isLoading: false, classes: res.data[0], groupsClass: res.data[1], isClassesSelected: true, userInput: updateUserInput});
       })
       .catch(err => {
          console.log(err);
          this.setState({ isLoading: false });
+      });   
+}
+
+   getChildrenListFromBD = () => {
+      this.setState({ isLoading: true }, () => {
+         axios.get(`http://localhost:3001/ListChildrens`)
+         .then(res => {
+            this.setState({ isLoading: false, childrenList: res.data, isChildInBD: !this.state.isChildInBD });
+         })
+         .catch(err => {
+            console.log(err);
+            this.setState({ isLoading: false });
+         });
       });
+      
    }
 
    userSelect = (event) => {
       if (event.target.name === 'classes'){
+         //Выбран кружок
          let updateUserInput = this.state.userInput;
-         updateUserInput.classes_id =event.target.value
-
+         updateUserInput.classes_id = event.target.value
          //Удаляем поле из ошибок
          const newFielsWithError = this.state.fieldsWithError.filter((item) => {
             return item !== event.target.name;
-        });
+         });
 
          this.setState({ userInput: updateUserInput, isClassesSelected: true, fieldsWithError: [...newFielsWithError] });
+         //Запрашиваем из БД список групп для выбранноего кружка
          this.getGroupsNameFromBD(event.target.value);
+      
       } else if (event.target.name === 'groups_class'){
-         let updateUserInput = this.state.userInput;
-         updateUserInput.groups_class_id = event.target.value;
+         //Выбрана группа
+         console.log(this.state.groupsClass);
 
-         // //Проверяем, что есть свободные места в группе
-         // let freePlaces = this.state.groups_class[index].max_number - this.state.groups_class[index].current_number
-         // if (freePlaces > 0) {
-         //    const newFielsWithError = this.state.fieldsWithError.filter((item) => {
-         //       return item !== event.target.name;
-         //    });
-         //    this.setState({ userInput: updateUserInput, fieldsWithError: [...newFielsWithError] });
-         // }
+         // Определяем количество свободных мест, минимальный и максимальный возраст группы
+         let freePlaces, min_age, max_age;
+         this.state.groupsClass.forEach((group) => {
+            if (group.group_id === event.target.value) {
+               freePlaces = group.max_number - group.current_number;
+               min_age = group.min_age_group;
+               max_age = group.max_age_group;
+               // console.log(freePlaces);
+            }
+         });
+
+         let updateUserInput = this.state.userInput;
+         updateUserInput.group.groups_class_id = event.target.value;
+         updateUserInput.group.min_age = min_age;
+         updateUserInput.group.max_age = max_age;
+         updateUserInput.group.freePlaces = freePlaces;
+         
+         if (freePlaces > 0) {
+            const newFielsWithError = this.state.fieldsWithError.filter((item) => {
+               return item !== event.target.name;
+            });
+            this.setState({ userInput: updateUserInput, fieldsWithError: [...newFielsWithError] });
+         }
 
          this.setState({ userInput: updateUserInput });
+      
       } else if (event.target.name === 'child-in-BD'){
          
          if(!this.state.isChildInBD) {
-            this.setState({ isChildInBD: !this.state.isChildInBD });
             this.getChildrenListFromBD();
+
          } else {
             let updateUserInput = this.state.userInput;
             updateUserInput.children = {
@@ -183,17 +232,16 @@ class Recording extends Component {
          });
    }
 
-   // updateState = (listId) => {
-   //    getGroupsNameFromBD(listId.classes_id);
-
-   // }
-
    render() { 
-      
-      if (!this.state.classes) {
-         this.getListOfClassesFromBD();
-      }
 
+      if (!this.props.location.state && !this.state.classes) {
+         this.getListOfClassesFromBD();
+      } 
+      
+      if (this.props.location.state && !this.state.classes) {
+         this.getListClassesAndGroupsFromBD(this.props.location.state);
+      }
+      
       if (this.state.isLoading) {
          return (
                <div className="preloader">
@@ -201,18 +249,14 @@ class Recording extends Component {
                </div>
          );
       }
+      
 
-      // if (this.props.location.state && !this.state.groups_class) {
-      //    this.updateState(this.props.location.state);
+      // if (this.state.isSaved && !this.state.loading) {
+      //       return <Redirect to='/shedule'/>
       // }
-
-      if (this.state.isSaved && !this.state.loading) {
-            return <Redirect to='/shedule'/>
-      }
 
       
       // console.log(this.state.fieldsWithError);
-
       return (
          <>
                <form className="recording-field" onSubmit={this.recordInBD}>
@@ -233,14 +277,14 @@ class Recording extends Component {
                      </label>
 
                      <label>
-                           Группа:            
+                           Группа:         
                            {!this.state.isClassesSelected
                            ?
                               <select name="groups_class" className="recording-field__select">
                                  <option value="" hidden>Сначала нужно выбрать кружок</option>
                               </select>
                            :
-                              <select onChange={this.userSelect} name="groups_class" value={this.state.userInput.groups_class_id} className="recording-field__select">
+                              <select onChange={this.userSelect} name="groups_class" value={this.state.userInput.group.groups_class_id} className="recording-field__select">
                                  <option value="" hidden>Выберите группу</option>
                                  {this.state.groupsClass.map((groupItem, index) => {
                                        return <option 

@@ -20,16 +20,16 @@ class GroupItem extends Component {
                 <p className="groupItem-info margin-top-5">Свободно: {this.props.max_number - this.props.current_number}</p>
                 <h4 className="groupItem-title">Расписание</h4>
                 <ul className="groupItem-info margin-0">
-                    {this.props.shedule.map((shedule_item) => {
+                    {this.props.shedule.map((shedule_item, index) => {
                         return (
-                            <li className="groupItem-info list margin-0">{shedule_item.day}: {shedule_item.time_start} - {shedule_item.time_end}</li>
+                            <li className="groupItem-info list margin-0" key={index}>{shedule_item.day}: {shedule_item.time_start} - {shedule_item.time_end}</li>
                         );
                     }
                     )}
                 </ul>
 
                 <Link 
-                    className="groupItem-button"
+                    className={(this.props.max_number - this.props.current_number) ? "groupItem-button" : "groupItem-button unvisible"}
                     to={{
                         pathname: "/recording", 
                         state: {
