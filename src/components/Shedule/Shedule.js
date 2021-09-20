@@ -5,6 +5,7 @@ import axios from "axios";
 import './Shedule.css';
 import SheduleItem from '../../components/SheduleItem/SheduleItem';
 import ListGroup from '../ListGroup/ListGroup';
+import Preloader from '../Preloader/Preloader';
 
 class Shedule extends Component {
 
@@ -78,11 +79,7 @@ class Shedule extends Component {
         }
 
         if (this.state.isLoading) {
-            return (
-                <div className="preloader">
-                    Загрузка из БД
-                </div>
-            );
+            return <Preloader />
         }
 
         return (

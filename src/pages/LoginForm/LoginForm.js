@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { logIn } from '../../components/actions/actions';
 
 import './LoginForm.css';
+import Preloader from '../../components/Preloader/Preloader';
 
 class LoginForm extends Component {
 
@@ -27,6 +28,11 @@ class LoginForm extends Component {
     }
 
     render() { 
+
+        if(this.props.isLoading) {
+            return <Preloader />
+        }
+
         return (
             <div className="login-page">
                 <div className="login-page__wrapper">
@@ -48,7 +54,8 @@ class LoginForm extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        error: state.error
+        error: state.error,
+        isLoading: state.loading
     };
 };
 

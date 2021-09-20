@@ -5,6 +5,7 @@ import axios from "axios";
 import './ListClasses.css';
 import ClassItem from '../../components/ClassItem/ClassItem';
 import MoreDetails from '../MoreDetails/MoreDetails';
+import Preloader from '../Preloader/Preloader';
 
 class ListClasses extends Component {
 
@@ -55,11 +56,7 @@ class ListClasses extends Component {
         }
 
         if (this.state.isLoading) {
-            return (
-                <div className="preloader">
-                    Загрузка из БД
-                </div>
-            );
+            return <Preloader />
         }
 
         return (

@@ -4,6 +4,7 @@ import axios from "axios";
 
 import './Recording.css';
 import InputArea from '../InputArea/InputArea';
+import Preloader from '../Preloader/Preloader';
 
 const dateFormat = require("dateformat");
 const today = new Date()
@@ -291,11 +292,7 @@ class Recording extends Component {
       }
       
       if (this.state.isLoading) {
-         return (
-               <div className="preloader">
-                  Загрузка из БД
-               </div>
-         );
+         return <Preloader />
       }
       
 
