@@ -348,7 +348,6 @@ class Recording extends Component {
 
    render() { 
 
-      console.log(this.state);
       //Проверка корректности заполнения полей
       let isCorrectInput = this.isCorrectInput();
 
