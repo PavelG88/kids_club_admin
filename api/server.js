@@ -210,7 +210,8 @@ app.get('/ListChildrens', (request, response) => {
 
 app.post('/Recording', (request, response) => {
 
-    const { groups_class_id, children, user_id} = request.body;
+    const {children, user_id} = request.body;
+    const groups_class_id = request.body.group.groups_class_id;
     if (children.kid_id) {
         connection.query(`
             INSERT INTO list_groups (groups_class_id, children_list_id, users_list_id_created, users_list_id_last_changed)

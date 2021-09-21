@@ -22,8 +22,7 @@ class Recording extends Component {
       isGroupSelected: false,
       isAgeKidSpecified: false,
       isAgeKidCorrectForGroup: true,
-      // fieldsWithError: ['classes', 'kid_name', 'kid_surname', 'birthday', 'parent_name', 'parent_surname', 'parent_phone'],
-      fieldsWithError: [],
+      fieldsWithError: ['classes', 'kid_name', 'kid_surname', 'birthday', 'parent_name', 'parent_surname', 'parent_phone'],
       isChildInBD: false,
       childrenList: null,
       userInput: {
@@ -43,7 +42,8 @@ class Recording extends Component {
          }, 
          user_id: this.props.user_id
       },
-      isSave: false
+      isSave: false,
+      isSecondInput: false
    }
 
    getListOfClassesFromBD = () => {
@@ -78,10 +78,10 @@ class Recording extends Component {
          let updateUserInput = this.state.userInput;
          updateUserInput.classes_id = classes_id;
 
-         let freePlaces, min_age, max_age;
+         let name_group, min_age, max_age;
          res.data[1].forEach((group) => {
             if (group.group_id === group_id) {
-               freePlaces = group.max_number - group.current_number;
+               name_group = group.name_group;
                min_age = group.min_age_group;
                max_age = group.max_age_group;
                // console.log(freePlaces);
@@ -91,8 +91,22 @@ class Recording extends Component {
          updateUserInput.group.groups_class_id = group_id;
          updateUserInput.group.min_age = min_age;
          updateUserInput.group.max_age = max_age;
-         updateUserInput.group.freePlaces = freePlaces;
-         this.setState({ isLoading: false, classes: res.data[0], groupsClass: res.data[1], isClassesSelected: true, userInput: updateUserInput, isGroupSelected: true});
+         updateUserInput.group.name_group = name_group;
+
+         //Удаляем поле classes из ошибок
+         const newFielsWithError = this.state.fieldsWithError.filter((item) => {
+            return item !== 'classes';
+         });
+
+         this.setState({ 
+            isLoading: false, 
+            classes: res.data[0], 
+            groupsClass: res.data[1], 
+            isClassesSelected: true, 
+            userInput: updateUserInput, 
+            isGroupSelected: true,
+            fieldsWithError: [...newFielsWithError]
+         });
       })
       .catch(err => {
          console.log(err);
@@ -132,11 +146,12 @@ class Recording extends Component {
          //Выбрана группа
 
          // Определяем минимальный и максимальный возраст группы
-         let min_age, max_age;
+         let min_age, max_age, name_group;
          this.state.groupsClass.forEach((group) => {
             if (group.group_id === +event.target.value) {
                min_age = group.min_age_group;
                max_age = group.max_age_group;
+               name_group = group.name_group;
                // console.log(freePlaces);
             }
          });
@@ -145,6 +160,7 @@ class Recording extends Component {
          updateUserInput.group.groups_class_id = event.target.value;
          updateUserInput.group.min_age = min_age;
          updateUserInput.group.max_age = max_age;
+         updateUserInput.group.name_group = name_group;
          
          //Сравнение возраста группы и возраста ребенка на первое сентября текущего года
          if (this.state.isAgeKidSpecified) {
@@ -173,7 +189,16 @@ class Recording extends Component {
                parent_phone: '',
                age: ''
             }
-            this.setState({ isChildInBD: !this.state.isChildInBD, isAgeKidSpecified: false, isAgeKidCorrectForGroup: true, childrenList: null, userInput: updateUserInput });
+
+            const newFieldsWithError = this.state.isClassesSelected ? ['kid_name', 'kid_surname', 'birthday', 'parent_name', 'parent_surname', 'parent_phone'] : ['classes', 'kid_name', 'kid_surname', 'birthday', 'parent_name', 'parent_surname', 'parent_phone'];
+            this.setState({ 
+               isChildInBD: !this.state.isChildInBD, 
+               isAgeKidSpecified: false, 
+               isAgeKidCorrectForGroup: true, 
+               childrenList: null, 
+               userInput: updateUserInput, 
+               fieldsWithError: newFieldsWithError
+            });
          }
       } else if (event.target.name === 'select-child'){
          let selectedKid;
@@ -188,11 +213,13 @@ class Recording extends Component {
          selectedKid.age  = (+selectedKid.birthday.split('-')[1] < 9) ? (currentYear - +selectedKid.birthday.split('-')[0]) : (currentYear - +selectedKid.birthday.split('-')[0] - 1);
          updateUserInput.children = selectedKid;
 
+         const newFieldsWithError = this.state.isClassesSelected ? [] : ['classes'];
+
          if (this.state.isGroupSelected) {
             let isAgeKidCorrectForGroup = this.checkAge(this.state.userInput.group.min_age, this.state.userInput.group.max_age, selectedKid.age);
-            this.setState({ userInput: updateUserInput, isAgeKidCorrectForGroup: isAgeKidCorrectForGroup, isAgeKidSpecified: true });
+            this.setState({ userInput: updateUserInput, isAgeKidCorrectForGroup: isAgeKidCorrectForGroup, isAgeKidSpecified: true, fieldsWithError: newFieldsWithError });
          } else {
-            this.setState({ userInput: updateUserInput, isAgeKidSpecified: true });
+            this.setState({ userInput: updateUserInput, isAgeKidSpecified: true, fieldsWithError: newFieldsWithError });
          } 
 
       }
@@ -281,24 +308,75 @@ class Recording extends Component {
          });
    }
 
+   isCorrectInput = () => {
+      return (this.state.isAgeKidCorrectForGroup && !this.state.fieldsWithError.length)
+   }
+
+   clearState = () => {
+      this.setState({
+         isLoading: true,
+         classes: null,
+         groupsClass: null,
+         isClassesSelected: false,
+         isGroupSelected: false,
+         isAgeKidSpecified: false,
+         isAgeKidCorrectForGroup: true,
+         fieldsWithError: ['classes', 'kid_name', 'kid_surname', 'birthday', 'parent_name', 'parent_surname', 'parent_phone'],
+         isChildInBD: false,
+         childrenList: null,
+         userInput: {
+            classes_id: '',
+            group: {},
+            children: {
+                  kid_id: null,
+                  kid_name: '',
+                  kid_surname: '',
+                  kid_second_name: '',
+                  birthday: '',
+                  parent_name: '',
+                  parent_surname: '',
+                  parent_second_name: '',
+                  parent_phone: '',
+                  age: '' //Возраст на первое сентября текущего года
+            }, 
+            user_id: this.props.user_id
+         },
+         isSave: false,
+         isSecondInput: true
+      })
+   }
+
    render() { 
 
-      if (!this.props.location.state && !this.state.classes) {
+      console.log(this.state);
+      //Проверка корректности заполнения полей
+      let isCorrectInput = this.isCorrectInput();
+
+      //Если props пустые и список кружков пустой, заполняем информацию по кружкам из БД
+      if ((!this.props.location.state || this.state.isSecondInput) && !this.state.classes) {
          this.getListOfClassesFromBD();
       } 
       
-      if (this.props.location.state && !this.state.classes) {
+      //Если пришли props и список кружков пустой, заполняем информацию по props
+      if (this.props.location.state && !this.state.isSecondInput && !this.state.classes) {
          this.getListClassesAndGroupsFromBD(this.props.location.state);
       }
       
+      //Если выполняется запрос из БД, отображается preloader
       if (this.state.isLoading) {
          return <Preloader />
       }
       
-
-      // if (this.state.isSaved && !this.state.loading) {
-      //       return <Redirect to='/shedule'/>
-      // }
+      if (this.state.isSave && !this.state.loading) {
+         return (
+            <div className="recording-saved">
+               <div className="recording-saved__wrapper">
+                  <div className="recording-saved__text">Ребенок успешно записан в группу {this.state.userInput.group.name_group}</div>
+                  <div className="recording-saved__button" onClick={this.clearState}>Закрыть</div>
+               </div>
+            </div>
+         )
+      }
 
       
       // console.log(this.state.fieldsWithError);
@@ -441,7 +519,7 @@ class Recording extends Component {
                            disabled={this.state.userInput.children.kid_id}
                      />
 
-                     <button disabled={this.state.fieldsWithError.length}>Записать</button>
+                     <button disabled={!isCorrectInput}>Записать</button>
 
                   </div>
                </form>

@@ -34,3 +34,38 @@
 .unvisible {
     display: none;
 }
+
+.recording-saved {
+    display: flex;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.recording-saved__wrapper {
+    margin: auto;
+    text-align: center;
+    max-width: 250px;
+    border: 2px solid rgb(6, 105, 253);
+    border-radius: 5px;
+    background-color: honeydew;
+    padding: 10px;
+}
+
+.recording-saved__text {
+    font-size: 18px;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+}
+
+.recording-saved__button {
+    cursor: pointer;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    color: rgb(6, 105, 253);
+    margin-top: 20px;
+}

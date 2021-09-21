@@ -7,8 +7,8 @@ class Preloader extends Component {
         return(
             <div className="preloader">
                 <div className="preloader__background">
-                    <span className="preloader__text">Загрузка из базы </span>
                     <img className="preloader__img" src="/images/preloader.svg" alt="preloader"/>
+                    <span className="preloader__text">Загрузка из базы... </span>
                 </div>
             </div>
         );
