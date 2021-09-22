@@ -10,13 +10,13 @@ class App extends React.Component {
       // console.log(this.props.user.length);
       if(this.props.user.user_id && !this.props.isLoading){
          return (
-            <div className="App">
+            <div className="wrapper">
                <MainPage />
             </div>
          );
       } else {
          return (
-            <div className="App">
+            <div className="wrapper">
                <LoginForm />
             </div>
          );

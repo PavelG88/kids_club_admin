@@ -18,9 +18,9 @@ class MainPage extends Component {
 
     render() { 
         return (
-            <div className="wrapper">
+            <div className="main-paige__wrapper">
                 <Header />
-                <div className="info-ifeld">
+                <div className="info-field">
                     <Route path="/" exact component={Main}/>
                     <Route path="/listClasses" exact component={ListClasses}/>
                     <Route path="/recording" exact component={Recording}/>

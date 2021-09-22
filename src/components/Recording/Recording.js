@@ -137,7 +137,7 @@ class Recording extends Component {
          const newFielsWithError = this.state.fieldsWithError.filter((item) => {
             return item !== event.target.name;
          });
-
+         console.log(updateUserInput);
          this.setState({ userInput: updateUserInput, fieldsWithError: [...newFielsWithError] });
          //Запрашиваем из БД список групп для выбранноего кружка
          this.getGroupsNameFromBD(event.target.value);
@@ -171,7 +171,8 @@ class Recording extends Component {
          } 
       
       } else if (event.target.name === 'child-in-BD'){
-         
+         //Снятие/установка флага наличия ребенка в БД
+
          if(!this.state.isChildInBD) {
             this.getChildrenListFromBD();
 
@@ -201,6 +202,7 @@ class Recording extends Component {
             });
          }
       } else if (event.target.name === 'select-child'){
+         //Выбран ребенок из БД
          let selectedKid;
          for (let i = 0; i < this.state.childrenList.length; i++ ) {
                if (this.state.childrenList[i].kid_id === +event.target.value) {
@@ -212,7 +214,7 @@ class Recording extends Component {
          //Определяем возраст на первое сентября текущего года
          selectedKid.age  = (+selectedKid.birthday.split('-')[1] < 9) ? (currentYear - +selectedKid.birthday.split('-')[0]) : (currentYear - +selectedKid.birthday.split('-')[0] - 1);
          updateUserInput.children = selectedKid;
-
+         console.log(updateUserInput);
          const newFieldsWithError = this.state.isClassesSelected ? [] : ['classes'];
 
          if (this.state.isGroupSelected) {
@@ -377,28 +379,29 @@ class Recording extends Component {
          )
       }
 
-      
-      // console.log(this.state.fieldsWithError);
       return (
          <>
                <form className="recording-field" onSubmit={this.recordInBD}>
-                  <div className="input-field">
-                     <label>
-                           Кружок:
-                           <select onChange={this.userSelect} name="classes" value={this.state.userInput.classes_id} className="recording-field__select">
-                              <option value='' hidden>Выберите кружок</option>
-                              {this.state.classes.map((classItem) => {
-                                 return <option 
-                                       value={classItem.class_id} 
-                                       key={classItem.class_id}
-                                       >
-                                          {classItem.name_class}
-                                       </option>
-                              })}
-                           </select>
-                     </label>
+                  <div className="recording__input-field">
+                     <div className="select-field">
+                        <label className="select-field__label">
+                              Кружок:
+                              <select onChange={this.userSelect} name="classes" value={this.state.userInput.classes_id} className="recording-field__select">
+                                 <option value='' hidden>Выберите кружок</option>
+                                 {this.state.classes.map((classItem) => {
+                                    return <option 
+                                          value={classItem.class_id} 
+                                          key={classItem.class_id}
+                                          >
+                                             {classItem.name_class}
+                                          </option>
+                                 })}
+                              </select>
+                        </label>
+                     </div>
 
-                     <label>
+                     <div className="select-field">
+                        <label className="select-field__label">
                            Группа:         
                            {this.state.isClassesSelected
                            ?
@@ -421,30 +424,37 @@ class Recording extends Component {
                               </select>
                            }
                            <div className={this.state.isAgeKidCorrectForGroup ? "error unvisible" : "error"}>{err1}</div>
-                     </label>
+                        </label>
+                     </div>
 
-                     <label>
-                           <input type="checkbox" name="child-in-BD" onChange={this.userSelect} checked={this.state.isChildInBD}/>
-                           Уже есть в Базе
-                     </label>
+                     <div className="select-field">
+                        <label className="select-field__label">
+                              <input type="checkbox" name="child-in-BD" onChange={this.userSelect} checked={this.state.isChildInBD}/>
+                              Уже есть в Базе
+                        </label>
+                     </div>
                      
-                     {this.state.isChildInBD
-                     ?
-                           <select onChange={this.userSelect} name="select-child" className="recording-field__select">
-                              <option value='' hidden>Выберите ребенка</option>
-                              {this.state.childrenList.map((child) => {
-                                 return <option 
-                                       value={child.kid_id} 
-                                       key={child.kid_id}
-                                       >
-                                          {child.kid_surname + ' ' + child.kid_name + ' (' + dateFormat(child.birthday, "dd.mm.yyyy") + ')'}
-                                       </option>
-                              })}
-                           </select>
-                     :
-                           <p>Введите информацию о ребенке</p>     
-                     }
-                  
+                     <div className="select-field">
+                        <label className="select-field__label">
+                           {this.state.isChildInBD
+                           ?
+                              <select onChange={this.userSelect} name="select-child" value={this.state.userInput.children.kid_id} className="recording-field__select">
+                                 <option value='' hidden>Выберите ребенка</option>
+                                 {this.state.childrenList.map((child) => {
+                                    return <option 
+                                          value={child.kid_id} 
+                                          key={child.kid_id}
+                                          >
+                                             {child.kid_surname + ' ' + child.kid_name + ' (' + dateFormat(child.birthday, "dd.mm.yyyy") + ')'}
+                                          </option>
+                                 })}
+                              </select>
+                        :
+                              <p className="select-field__text">Введите информацию о ребенке</p>     
+                           }
+                        </label>
+                     </div>
+
                      <InputArea 
                            id='kid_name'
                            label='Имя ребенка:'
@@ -518,7 +528,9 @@ class Recording extends Component {
                            disabled={this.state.userInput.children.kid_id}
                      />
 
-                     <button disabled={!isCorrectInput}>Записать</button>
+                     <div className="recording-field__button">
+                        <button className="recording__button" disabled={!isCorrectInput}>Записать</button>
+                     </div>
 
                   </div>
                </form>

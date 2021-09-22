@@ -2,14 +2,7 @@ import { startedConnecting, failureConnecting, successLogIn, successLogOut } fro
 
 let initialState = {
    user: {
-      data_last_login: "2021-09-04T13:01:19.000Z",
-      data_registration: "2021-09-04T13:01:19.000Z",
-      login: "GrigorevPN",
-      password: "46792755",
-      user_id: 1,
-      user_name: "Павел",
-      user_surname: "Григорьев",
-      user_second_name: "Николаевич"    
+         
    },
    loading: false,
    error: null
