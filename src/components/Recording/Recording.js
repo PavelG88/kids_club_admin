@@ -449,7 +449,7 @@ class Recording extends Component {
                                           </option>
                                  })}
                               </select>
-                        :
+                           :
                               <p className="select-field__text">Введите информацию о ребенке</p>     
                            }
                         </label>
