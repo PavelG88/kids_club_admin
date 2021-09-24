@@ -33,11 +33,22 @@
 
 .groupItem-button {
     text-decoration: none;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    color: #FFFFFF;
+    font-size: 12px;
+    cursor: pointer;
+    outline: 0;
+    background: #4caf4fd3;
     margin-top: 10px;
     text-align: center;
-    font-family: "Roboto", sans-serif;
-    color: rgb(6, 105, 253);
-    cursor: pointer;
+}
+
+.groupItem-button:hover {
+    background: #328835; 
 }
 
 .list {

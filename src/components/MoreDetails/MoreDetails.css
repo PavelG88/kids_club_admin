@@ -6,20 +6,38 @@
     box-sizing: border-box;
     background-color: rgb(197, 247, 230);
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .moreDetails-button {
     text-decoration: none;
-    text-align: center;
     font-family: "Roboto", sans-serif;
-    color: rgb(6, 105, 253);
+    text-transform: uppercase;
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    color: #FFFFFF;
+    font-size: 12px;
     cursor: pointer;
-    margin-top: 5px;
+    outline: 0;
+    background: #4caf4fd3;
+    margin-top: 10px;
+    text-align: center;
+    margin-top: 10px;
+    width: 150px;
+}
+
+.moreDetails-button:hover {
+    background: #328835; 
 }
 
 .moreDetails-title, .moreDetails-info {
     text-align: center;
     font-family: "Roboto", sans-serif;
+    margin: 5px;
 }
 
 .moreDetails-group {

@@ -70,19 +70,23 @@
 }
 
 .recording__button {
+    font-size: 16px;
     text-decoration: none;
+    font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     border-radius: 5px;
+    border: none;
+    padding: 10px;
+    color: #FFFFFF;
     cursor: pointer;
+    outline: 0;
+    background: #4caf4fd3;
     text-align: center;
-    font-family: "Roboto", sans-serif;
-    font-size: 16px;
     margin-top: 20px;
-    padding: 5px;
 }
 
-.recording__button:hover {
-    opacity: 0.8;
+.recording__button:hover:enabled, .recording-saved__button:hover {
+    background: #328835; 
 }
 
 .recording__button:disabled {
@@ -90,9 +94,17 @@
 }
 
 .recording-saved__button {
-    cursor: pointer;
-    text-align: center;
+    text-decoration: none;
     font-family: "Roboto", sans-serif;
-    color: rgb(6, 105, 253);
+    text-transform: uppercase;
+    border-radius: 5px;
+    border: none;
+    padding: 2px;
+    color: #FFFFFF;
+    font-size: 12px;
+    cursor: pointer;
+    outline: 0;
+    background: #4caf4fd3;
+    text-align: center;
     margin-top: 20px;
 }

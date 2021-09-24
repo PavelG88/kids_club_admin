@@ -24,7 +24,7 @@ class ListGroup extends Component {
     }
 
     clickDelet = () => {
-        this.props.delete(this.state.list_groups_id, this.state.props.sheduleItem)
+        this.props.delete(this.state.list_groups_id, this.state.sheduleItem)
         this.setState({
             isConfirm: false, 
             list_groups_id: null, 
