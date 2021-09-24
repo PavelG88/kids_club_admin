@@ -20,7 +20,7 @@
 }
 
 .menu-field__item:hover {
-   opacity: 0.5;
+   opacity: 0.6;
 }
 
 .menu-field__item:nth-child(2n) {

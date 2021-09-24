@@ -3,10 +3,11 @@
     background-position: center;
     background-size: cover;
     min-height: 100vh;
-    padding: 10px;
     box-sizing: border-box;
 }
 
 .info-field {
     margin: auto;
+    padding: 10px;
+    box-sizing: border-box;
 }
