@@ -32,11 +32,21 @@
 
 .sheduleItem-button {
     text-decoration: none;
-    margin-top: 10px;
-    text-align: center;
     font-family: "Roboto", sans-serif;
-    color: rgb(6, 105, 253);
+    text-transform: uppercase;
+    border-radius: 5px;
+    border: none;
+    padding: 1px;
+    color: #FFFFFF;
+    font-size: 12px;
     cursor: pointer;
+    outline: 0;
+    background: #4caf4fd3;
+    margin-top: 10px;
+}
+
+.sheduleItem-button:hover {
+    background: #328835;
 }
 
 .list {

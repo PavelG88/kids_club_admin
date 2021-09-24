@@ -32,11 +32,22 @@
 
 .list-group-button {
     text-decoration: none;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    border-radius: 5px;
+    border: none;
+    padding: 2px;
+    color: #FFFFFF;
+    font-size: 12px;
+    cursor: pointer;
+    outline: 0;
+    background: #4caf4fd3;
     margin-top: 10px;
     text-align: center;
-    font-family: "Roboto", sans-serif;
-    color: rgb(6, 105, 253);
-    cursor: pointer;
+}
+
+.list-group-button:hover {
+    background: #328835; 
 }
 
 .list-group__list-item {
@@ -58,6 +69,11 @@
     border-radius: 100%;
     border: 2px solid grey;
     cursor: pointer;
+}
+
+.list-group__button-delete:hover {
+    color: white;
+    background-color: grey;
 }
 
 .list {
