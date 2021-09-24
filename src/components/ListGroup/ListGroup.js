@@ -5,6 +5,45 @@ import './ListGroup.css';
 
 class ListGroup extends Component {
 
+    state = {
+        isConfirm: false,
+        list_groups_id: null, 
+        sheduleItem: null,
+        kid_surname: null, 
+        kid_name: null
+    }
+
+    confirmationDeletion = (list_groups_id, sheduleItem, kid_surname, kid_name) => {
+        this.setState({
+            isConfirm: true, 
+            list_groups_id: list_groups_id, 
+            sheduleItem: sheduleItem,
+            kid_surname: kid_surname,
+            kid_name: kid_name
+        });
+    }
+
+    clickDelet = () => {
+        this.props.delete(this.state.list_groups_id, this.state.props.sheduleItem)
+        this.setState({
+            isConfirm: false, 
+            list_groups_id: null, 
+            sheduleItem: null,
+            kid_surname: null,
+            kid_name: null
+        });
+    }
+    
+    clickCancel = () => {
+        this.setState({
+            isConfirm: false, 
+            list_groups_id: null, 
+            sheduleItem: null,
+            kid_surname: null,
+            kid_name: null
+        });
+    } 
+
     render() { 
         if (!this.props.isShow) {
             return null;
@@ -31,7 +70,7 @@ class ListGroup extends Component {
                                 <li className="list-group-info margin-top-5 list" key={kid.kid_id}>
                                     <div className="list-group__list-item">
                                         <div className="list-group__kid">{kid.kid_surname} {kid.kid_name}</div>
-                                        <div className="list-group__button-delete" onClick={() => {this.props.delete(kid.list_groups_id, this.props.sheduleItem)}}>X</div>
+                                        <div className="list-group__button-delete" onClick={() => {this.confirmationDeletion(kid.list_groups_id, this.props.sheduleItem, kid.kid_surname, kid.kid_name)}}>X</div>
                                     </div>
                                 </li>
                             );
@@ -46,6 +85,18 @@ class ListGroup extends Component {
                     onClick={this.props.action}
                 >
                     Закрыть
+                </div>
+
+                <div className={this.state.isConfirm ? "confirm visible" : "confirm unvisible"}>
+                    <div className="confirm_wrapper">
+                        <p className="confirm_text">Вы уверены, что хотите удалить</p> 
+                        <p className="confirm_text-name">{this.state.kid_surname} {this.state.kid_name}</p>
+                        <div className="confirm__buttons">
+                            <button className="confirm__button" onClick = {this.clickDelet}>Удалить</button>
+                            <button className="confirm__button" onClick = {this.clickCancel}>Отменить</button>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         );

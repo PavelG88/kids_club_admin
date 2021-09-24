@@ -1,13 +1,13 @@
 .timedate {
     font-family: "Roboto", sans-serif;
-    font-size: 50px;
-    font-weight: 400;
+    font-size: 30px;
+    font-weight: 700;
     text-align: center;
-    max-width: 50%;
+    max-width: 40%;
     margin: 40px auto;
-    color: blue;
+    color: white;
     padding: 10px;
-    background-color: rgb(197, 247, 230);
+    background-color:rgba(27, 207, 21, 0.877);
     border-radius: 35%;
-    opacity: 0.8;
+    opacity: 0.9;
 }
