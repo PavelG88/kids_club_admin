@@ -118,7 +118,20 @@ class Recording extends Component {
       this.setState({ isLoading: true }, () => {
          axios.get(`http://localhost:3001/ListChildrens`)
          .then(res => {
-            this.setState({ isLoading: false, childrenList: res.data, isChildInBD: !this.state.isChildInBD });
+            let updateUserInput = this.state.userInput;
+            updateUserInput.children = {
+               kid_id: null,
+               kid_name: '',
+               kid_surname: '',
+               kid_second_name: '',
+               birthday: '',
+               parent_name: '',
+               parent_surname: '',
+               parent_second_name: '',
+               parent_phone: '',
+               age: ''
+            }
+            this.setState({ isLoading: false, childrenList: res.data, isChildInBD: !this.state.isChildInBD, userInput: updateUserInput });
          })
          .catch(err => {
             console.log(err);
@@ -311,7 +324,7 @@ class Recording extends Component {
    }
 
    isCorrectInput = () => {
-      return (this.state.isAgeKidCorrectForGroup && !this.state.fieldsWithError.length)
+      return (this.state.isAgeKidCorrectForGroup && !this.state.fieldsWithError.length && this.state.isGroupSelected)
    }
 
    clearState = () => {

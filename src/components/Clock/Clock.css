@@ -3,8 +3,11 @@
     font-size: 50px;
     font-weight: 400;
     text-align: center;
-    width: 50%;
+    max-width: 50%;
     margin: 40px auto;
     color: blue;
-    padding: 20px;
+    padding: 10px;
+    background-color: rgb(197, 247, 230);
+    border-radius: 35%;
+    opacity: 0.8;
 }
