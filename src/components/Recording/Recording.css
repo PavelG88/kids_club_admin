@@ -36,6 +36,11 @@
 .recording-field__select {
     font-size: 16px;
     width: 100%;
+    box-sizing: border-box;
+    padding: 3px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 255, 0.7);
+    border-radius: 5px;
 }
 
 .recording-saved {
@@ -91,6 +96,7 @@
 
 .recording__button:disabled {
     cursor: not-allowed;
+    background: rgba(128, 128, 128, 0.6);
 }
 
 .recording-saved__button {

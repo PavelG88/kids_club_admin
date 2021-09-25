@@ -3,11 +3,15 @@
     flex-direction: column;
     justify-content: space-evenly;
     margin: 5px;
-    border: 2px solid rgb(6, 105, 253);
+    border: 2px solid blue;
     border-radius: 5px;
     padding: 2px;
     box-sizing: border-box;
     background-color: honeydew;
+}
+
+.sheduleItem-field:hover {
+    box-shadow: 0.1em 0.1em 0.3em black;;
 }
 
 .sheduleItem-title {
@@ -16,6 +20,7 @@
     font-size: 12px;
     margin: 2px;
     padding: 0;
+    opacity: 1;
 }
 
 .sheduleItem-info {
@@ -53,3 +58,4 @@
     list-style-type: none;
     text-align: left;
 }
+

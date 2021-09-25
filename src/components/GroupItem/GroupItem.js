@@ -29,7 +29,7 @@ class GroupItem extends Component {
                 </ul>
 
                 <Link 
-                    className={(this.props.max_number - this.props.current_number) ? "groupItem-button" : "groupItem-button unvisible"}
+                    className={(this.props.max_number - this.props.current_number) ? "groupItem-button" : "groupItem-button disabled_link"}
                     to={{
                         pathname: "/recording", 
                         state: {

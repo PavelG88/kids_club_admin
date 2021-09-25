@@ -13,6 +13,7 @@
     padding: 5px;
     margin: 5px;
     box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
 .shedule-item__title {
@@ -23,19 +24,15 @@
     padding: 0;
 }
 
-.shedule-item__visible, .preloader {
+.shedule-item__visible {
     display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
-    background: rgba(0, 0, 0, 0.411);
+    background: rgba(0, 0, 0, 0.5);
     top: 0;
     bottom: 0;
     right: 0;
     left: 0;
 
-}
-
-.unvisible {
-    display: none;
 }

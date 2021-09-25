@@ -69,6 +69,7 @@
     border-radius: 100%;
     border: 2px solid grey;
     cursor: pointer;
+    min-width: 25px;
 }
 
 .list-group__button-delete:hover {
@@ -79,6 +80,10 @@
 .list {
     list-style-type: none;
     text-align: left;
+}
+
+.list:hover .list-group__kid {
+    color: red;
 }
 
 .confirm {

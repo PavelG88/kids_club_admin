@@ -8,3 +8,7 @@
     color: red;
     white-space: pre-line;
 }
+
+p, h1, h2, h3, h4, ul, ol,span {
+    cursor: default;
+} 

@@ -51,6 +51,12 @@
     background: #328835; 
 }
 
+.disabled_link {
+    pointer-events: none;
+    background: grey;
+    
+}
+
 .list {
     list-style-type: none;
     text-align: left;

@@ -475,7 +475,7 @@ class Recording extends Component {
                            type='text'
                            action={this.changeState}
                            value={this.state.userInput.children.kid_name}
-                           disabled={this.state.userInput.children.kid_id}
+                           disabled={this.state.isChildInBD}
                      />
                      <InputArea 
                            id='kid_surname'
@@ -484,7 +484,7 @@ class Recording extends Component {
                            type='text'
                            action={this.changeState}
                            value={this.state.userInput.children.kid_surname}
-                           disabled={this.state.userInput.children.kid_id}
+                           disabled={this.state.isChildInBD}
                      />
                      <InputArea 
                            id='kid_second_name'
@@ -493,7 +493,7 @@ class Recording extends Component {
                            type='text'
                            action={this.changeState}
                            value={this.state.userInput.children.kid_second_name}
-                           disabled={this.state.userInput.children.kid_id}
+                           disabled={this.state.isChildInBD}
                      />
                      <InputArea 
                            id='birthday'
@@ -502,7 +502,7 @@ class Recording extends Component {
                            type='date'
                            action={this.changeState}
                            value={this.state.userInput.children.birthday}
-                           disabled={this.state.userInput.children.kid_id}
+                           disabled={this.state.isChildInBD}
                      />
                      <InputArea 
                            id='parent_name'
@@ -511,7 +511,7 @@ class Recording extends Component {
                            type='text'
                            action={this.changeState}
                            value={this.state.userInput.children.parent_name}
-                           disabled={this.state.userInput.children.kid_id}
+                           disabled={this.state.isChildInBD}
                      />
                      <InputArea 
                            id='parent_surname'
@@ -520,7 +520,7 @@ class Recording extends Component {
                            type='text'
                            action={this.changeState}
                            value={this.state.userInput.children.parent_surname}
-                           disabled={this.state.userInput.children.kid_id}
+                           disabled={this.state.isChildInBD}
                      />
                      <InputArea 
                            id='parent_second_name'
@@ -529,7 +529,7 @@ class Recording extends Component {
                            type='text'
                            action={this.changeState}
                            value={this.state.userInput.children.parent_second_name}
-                           disabled={this.state.userInput.children.kid_id}
+                           disabled={this.state.isChildInBD}
                      />
                      <InputArea 
                            id='parent_phone'
@@ -538,7 +538,7 @@ class Recording extends Component {
                            type='text'
                            action={this.changeState}
                            value={this.state.userInput.children.parent_phone}
-                           disabled={this.state.userInput.children.kid_id}
+                           disabled={this.state.isChildInBD}
                      />
 
                      <div className="recording-field__button">
